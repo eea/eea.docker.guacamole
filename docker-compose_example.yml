@@ -1,0 +1,54 @@
+version: '2'
+services:
+  guacamoledb:
+    image: mariadb:10.5.5 
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      TZ: Europe/Copenhagen
+    volumes:
+    - guacamole-mysql:/var/lib/mysql
+    labels:
+      io.rancher.scheduler.affinity:host_label: hostname=changeme
+
+  guacd:
+    image: guacamole/guacd:1.2.0
+    restart: always
+
+  guacamole:
+    image: eeacms/eea-guacamole:1.2.0
+    restart: always
+    environment:
+
+      GUACD_HOSTNAME: guacd
+      GUACD_PORT: 4822
+
+      MYSQL_HOSTNAME: guacamoledb
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: changeme
+      MYSQL_USER: changeme
+      MYSQL_PASSWORD: changeme
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_AUTO_CREATE_ACCOUNTS: "true"
+
+      #OPENID_AUTHORIZATION_ENDPOINT: https://login.microsoftonline.com/changeme/oauth2/v2.0/authorize
+      #OPENID_JWKS_ENDPOINT: https://login.microsoftonline.com/common/discovery/v2.0/keys
+      #OPENID_ISSUER: https://login.microsoftonline.com/changeme/v2.0
+      #OPENID_CLIENT_ID: changeme
+      #OPENID_REDIRECT_URI: https://changeme/guacamole/#/
+
+      #LDAP_HOSTNAME: changeme
+      #LDAP_PORT: 389
+      #LDAP_ENCRYPTION_METHOD: starttls
+      #LDAP_USER_BASE_DN: changeme
+      #LDAP_SEARCH_BIND_DN: changeme
+      #LDAP_SEARCH_BIND_PASSWORD: changeme
+      #LDAP_USERNAME_ATTRIBUTE: email 
+
+      TZ: Europe/Copenhagen
+    ports:
+    - 8080:8080
+
+volumes:
+    guacamole-mysql:
+       driver: local
