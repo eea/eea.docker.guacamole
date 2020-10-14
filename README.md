@@ -2,11 +2,10 @@
 
 run the container with docker-compose:
 
-# git clone <reponame>
-# cd <reponame>
-# mv docker-compose_example.yml docker-compose.yml
-# docker-compose up -d
-```
+git clone <reponame>
+cd <reponame>
+mv docker-compose_example.yml docker-compose.yml
+docker-compose up -d
 
 ## Release to production
 
