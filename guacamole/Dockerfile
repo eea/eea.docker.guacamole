@@ -1,4 +1,4 @@
-FROM guacamole/guacamole:1.2.0
+FROM guacamole/guacamole:1.3.0
 
 MAINTAINER michimau <mauro.michielon@eea.europa.eu>
 
